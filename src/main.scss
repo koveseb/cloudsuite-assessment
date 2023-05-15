@@ -131,6 +131,14 @@ $red: #e56041;
   transform: translateX(-50%);
 }
 
+@mixin button() {
+  border-radius: 100px;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.2);
+  border: none;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
 /* === CSS ===
 ---------------------------------------------------- */
 
@@ -145,21 +153,27 @@ body {
 }
 
 .wrapper {
-  width: $max_width;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 3%;
+
+  @include min_extra_large_screens() {
+    width: $max_width;
+    margin: 0 auto;
+    padding: 0;
+  }
 }
 
 .button_yellow {
-  background-color: $yellow_light;
-  border-radius: 100px;
-  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.2);
-  border: none;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
   height: 62px;
   display: flex;
   align-items: center;
   padding: 18px 40px;
+  @include button();
+  background-color: $yellow_light;
+
+  &:hover {
+    background-color: $yellow_dark;
+  }
 
   a {
     @include button_font();
@@ -203,49 +217,86 @@ body {
     .nav_item {
       position: relative;
 
+      &:hover {
+        @include button();
+        background-color: $yellow_dark;
+
+        & > a {
+          color: $white;
+        }
+      }
+
       a {
         display: block;
-        padding: 15px;
+        padding: 5px 15px;
         color: $black;
         text-decoration: none;
+        @include primary_font(700, 21px, 18px);
+      }
+
+      &.dropdown {
+        position: relative;
+
+        & > a {
+          padding-right: 30px;
+        }
+
+        &:after {
+          color: $black;
+          content: '\f107';
+          font-family: 'Font Awesome 6 Free';
+          font-style: normal;
+          font-weight: 900;
+          font-variant: normal;
+          font-size: 15px;
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        &:hover {
+          &:after {
+            content: '\f106';
+            color: $white;
+          }
+
+          & > .dropdown_menu {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
       }
 
       .dropdown_menu {
         position: absolute;
-        top: 100%;
+        top: 40px;
         left: 0;
         background-color: $white;
-        padding: 0;
+        padding: 30px;
         margin: 0;
         list-style: none;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease-in-out;
+        width: 380px;
 
-        li {
-          margin: 0;
-
-          &.nav_item {
-            width: 100%;
+        .sub_nav_item {
+          &:not(:last-of-type) {
+            margin-bottom: 15px;
           }
 
-          .sub_nav_item {
-            a {
-              display: block;
-              padding: 1rem;
-              color: $black;
-              text-decoration: none;
+          a {
+            display: block;
+            color: $black;
+            text-decoration: none;
+            @include primary_font(400, 32px, 18px);
+            padding: 0;
+
+            &:hover {
+              text-decoration: underline;
             }
           }
-        }
-      }
-    }
-
-    .dropdown {
-      &:hover {
-        & > .dropdown_menu {
-          opacity: 1;
-          visibility: visible;
         }
       }
     }
@@ -267,10 +318,73 @@ body {
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0;
+    padding: 0 30px 0 0;
 
-    & > div {
-      padding: 30px;
+    .header_account {
+      &:hover {
+        @include button();
+        background-color: $yellow_dark;
+
+        & > a {
+          color: $white;
+        }
+      }
+
+      a {
+        display: block;
+        padding: 5px 15px 5px 30px;
+        color: $black;
+        text-decoration: none;
+        @include primary_font(700, 21px, 18px);
+        position: relative;
+
+        &:before {
+          content: '\f007';
+          font-family: 'Font Awesome 6 Free';
+          font-style: normal;
+          font-weight: 900;
+          font-variant: normal;
+          font-size: 18px;
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-54%);
+        }
+      }
+    }
+
+    .header_cart {
+      padding: 5px 10px;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        @include button();
+        background-color: $yellow_dark;
+
+        i {
+          color: $white;
+        }
+      }
+
+      .cart_qty {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 3px;
+        position: absolute;
+        width: 19px;
+        height: 17px;
+        right: -10px;
+        top: -10px;
+        background: $red;
+        border-radius: 2px;
+        color: $white;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 11px;
+      }
     }
   }
 }
