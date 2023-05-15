@@ -13,11 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.js$/,
@@ -25,19 +21,20 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style.min.css'
+      filename: 'style.min.css',
     }),
   ],
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
   },
+  watch: true,
 };
