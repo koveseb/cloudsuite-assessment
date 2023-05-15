@@ -36,5 +36,5 @@ module.exports = {
     minimize: true,
     minimizer: [new TerserPlugin()],
   },
-  watch: true,
+  watch: false,
 };
